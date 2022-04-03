@@ -2,8 +2,11 @@ package cmd
 
 import (
 	"fmt"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+
+	"github.com/vrazdalovschi/alien-invasion-simulator/internal/simulation"
 )
 
 var (
@@ -19,7 +22,21 @@ var (
 		Args:    cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			fmt.Println(fmt.Sprintf("Running simulation with %d aliens and %d maximum iterations to run on map %s.", aliens, iterations, args[0]))
-			fmt.Println("Simulation complete.")
+
+			world := simulation.NewWorld(simulation.WorldConfiguration{
+				Aliens:        aliens,
+				MaxIterations: iterations,
+				Verbose:       verbose,
+			})
+
+			if err := world.ReadFile(args[0]); err != nil {
+				return err
+			}
+
+			if err := world.Simulate(); err != nil {
+				return err
+			}
+
 			return nil
 		},
 	}
