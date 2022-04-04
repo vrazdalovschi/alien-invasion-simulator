@@ -108,7 +108,7 @@ Statistics:
 
 ### Improvement points
 
-Current version of the project follow the task description, but it can be extended with the points below:
+The current version of the project follows the task description, but it can be extended with the points below:
 
 * Random map generator.
 * Map visualizer (console/graphical) before and after simulation.
